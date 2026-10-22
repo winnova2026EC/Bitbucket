@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "TP1TDnNvkHc=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Winnova\\source\\repos\\Grupo4\\Grupo4\\Grupo4.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Winnova\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.13\\microsoft.aspnetcore.openapi.10.0.13.nupkg.sha512",
+    "C:\\Users\\Winnova\\.nuget\\packages\\microsoft.openapi\\2.12.2\\microsoft.openapi.2.12.2.nupkg.sha512"
+  ],
+  "logs": []
+}

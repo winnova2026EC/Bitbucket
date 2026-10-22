@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Sistema de Exportación";
+}
+
+<style>
+    body {
+        margin: 0;
+        background: #f1f5f9;
+        font-family: Arial, sans-serif;
+        color: #1e293b;
+    }
+
+    .panel {
+        max-width: 1100px;
+        margin: 35px auto;
+        padding: 30px;
+    }
+
+    .cabecera {
+        background: #064e3b;
+        color: white;
+        padding: 30px;
+        border-radius: 12px;
+        margin-bottom: 25px;
+    }
+
+    .cabecera h1 {
+        margin: 0 0 10px;
+        font-size: 30px;
+    }
+
+    .cabecera p {
+        margin: 0;
+        color: #d1fae5;
+    }
+
+    .modulos {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+    }
+
+    .tarjeta {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        border: 1px solid #dbe3ec;
+        box-shadow: 0 3px 10px #0f172a0b;
+    }
+
+    .tarjeta h2 {
+        font-size: 21px;
+        margin-top: 0;
+        color: #065f46;
+    }
+
+    .tarjeta p {
+        color: #64748b;
+        min-height: 38px;
+    }
+
+    .boton {
+        display: inline-block;
+        background: #047857;
+        color: white;
+        text-decoration: none;
+        padding: 11px 16px;
+        border-radius: 7px;
+        font-weight: bold;
+    }
+
+    .boton:hover {
+        background: #065f46;
+        color: white;
+    }
+
+    .pie {
+        text-align: center;
+        color: #64748b;
+        margin-top: 25px;
+        font-size: 13px;
+    }
+
+    @@media (max-width: 650px) {
+        .modulos {
+            grid-template-columns: 1fr;
+        }
+
+        .panel {
+            margin: 10px auto;
+            padding: 15px;
+        }
+    }
+</style>
+
+<div class="panel">
+    <header class="cabecera">
+        <h1>Sistema de Packing List y Despacho</h1>
+        <p>Gestión de exportaciones y control temporal de lotes</p>
+    </header>
+
+    <div class="modulos">
+        <section class="tarjeta">
+            <h2>01. Vendedores</h2>
+            <p>Registro y validación de los datos comerciales.</p>
+            <a href="/Vendedor" class="boton">Abrir vendedores</a>
+        </section>
+
+        <section class="tarjeta">
+            <h2>02. Packing List</h2>
+            <p>Registro de productos, clientes, destinos y embarques.</p>
+            <a href="/PackingList" class="boton">Abrir Packing List</a>
+        </section>
+
+        <section class="tarjeta">
+            <h2>03. Inspección temporal</h2>
+            <p>Evaluación de antigüedad y clasificación de los lotes.</p>
+            <a href="/Inspeccion" class="boton">Abrir inspecciones</a>
+        </section>
+
+        <section class="tarjeta">
+            <h2>04. Despacho de exportación</h2>
+            <p>Resumen de pallets, contenedor y estado del despacho.</p>
+            <a href="/Despacho" class="boton">Abrir despacho</a>
+        </section>
+    </div>
+
+    <footer class="pie">
+        Sistema de gestión de exportación marítima · Grupo 4
+    </footer>
+</div>

@@ -1,0 +1,84 @@
+﻿@model Grupo4.Models.Vendedor
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Registro de vendedor";
+}
+
+<h1>Registro de vendedor</h1>
+<p>Packing List y Despacho de Exportación</p>
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-success">
+        @ViewBag.Mensaje
+    </div>
+}
+
+<form asp-controller="Vendedor" asp-action="Index" method="post">
+    <div class="mb-3">
+        <label asp-for="IdVendedor">ID del vendedor</label>
+        <input asp-for="IdVendedor" class="form-control" />
+        <span asp-validation-for="IdVendedor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Nombre">Nombre completo</label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Email">Correo electrónico</label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Departamento">Departamento</label>
+        <input asp-for="Departamento" class="form-control" />
+        <span asp-validation-for="Departamento" class="text-danger"></span>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="Activo" class="form-check-input" />
+        <label asp-for="Activo" class="form-check-label">Vendedor activo</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Validar vendedor</button>
+</form>
+
+<hr />
+
+<h3>Continuar con el proceso de exportación</h3>
+
+<a href="/PackingList" class="boton">
+    Siguiente: Packing List →
+</a>
+
+<a href="/Inicio" class="boton-secundario">
+    Volver al menú principal
+</a>
+
+<style>
+    .boton {
+        display: inline-block;
+        background: #047857;
+        color: white;
+        text-decoration: none;
+        padding: 11px 16px;
+        border-radius: 7px;
+        margin-right: 8px;
+        margin-top: 8px;
+    }
+
+    .boton-secundario {
+        display: inline-block;
+        background: #475569;
+        color: white;
+        text-decoration: none;
+        padding: 11px 16px;
+        border-radius: 7px;
+        margin-top: 8px;
+    }
+</style>

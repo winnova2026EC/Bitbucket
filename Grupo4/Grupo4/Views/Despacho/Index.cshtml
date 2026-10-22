@@ -1,0 +1,172 @@
+﻿@model Grupo4.Models.DespachoExportacion
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Despacho de exportación";
+}
+
+<h1>Despacho de exportación</h1>
+<p>Contenedor reefer y resumen del Packing List</p>
+
+<form asp-controller="Despacho" asp-action="Index" method="post">
+    <div class="mb-3">
+        <label asp-for="IdContenedor">ID del contenedor</label>
+        <input asp-for="IdContenedor" class="form-control" />
+        <span asp-validation-for="IdContenedor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CapacidadMaximaPallets">
+            Capacidad máxima de pallets (valor de prueba)
+        </label>
+        <input asp-for="CapacidadMaximaPallets"
+               type="number" min="1" class="form-control" />
+        <span asp-validation-for="CapacidadMaximaPallets"
+              class="text-danger"></span>
+    </div>
+
+    <p><strong>Temperatura configurada:</strong> @Model.TemperaturaConfigurada</p>
+
+    <button type="submit" class="btn btn-primary">
+        Actualizar resumen
+    </button>
+</form>
+
+<hr />
+
+<h2>Resumen de inspecciones</h2>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Total de lotes inspeccionados</th>
+        <td>@Model.TotalLotesInspeccionados</td>
+    </tr>
+    <tr>
+        <th>Total de pallets inspeccionados</th>
+        <td>@Model.TotalPalletsInspeccionados</td>
+    </tr>
+    <tr>
+        <th>Lotes ProductoOK</th>
+        <td>@Model.LotesProductoOK</td>
+    </tr>
+    <tr>
+        <th>Lotes en observación</th>
+        <td>@Model.LotesEnObservacion</td>
+    </tr>
+    <tr>
+        <th>Lotes rechazados</th>
+        <td>@Model.LotesRechazados</td>
+    </tr>
+    <tr>
+        <th>Pallets aptos para embarque</th>
+        <td>@Model.PalletsAptosParaEmbarque</td>
+    </tr>
+</table>
+
+<hr />
+
+<h2>Control de embarques</h2>
+
+<p>
+    El despacho debe revisarse antes de autorizar el zarpe.
+</p>
+
+@if (Model.TotalLotesInspeccionados > 0)
+{
+    <div class="alert alert-info">
+        Hay @Model.TotalLotesInspeccionados lotes inspeccionados.
+        Revisa las alertas antes de continuar.
+    </div>
+}
+else
+{
+    <div class="alert alert-secondary">
+        No hay inspecciones registradas todavía.
+    </div>
+}
+
+
+@if (Model.CapacidadSuperada)
+{
+    <div class="alert alert-danger">
+        Se supera la capacidad configurada del contenedor.
+    </div>
+}
+else if (Model.LotesRechazados > 0)
+{
+    <div class="alert alert-warning">
+        Hay lotes rechazados. El despacho requiere revisión.
+    </div>
+}
+else if (Model.ListoParaZarpe)
+{
+    <div class="alert alert-success">
+        @Model.EstadoDespacho
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        @Model.EstadoDespacho
+    </div>
+}
+
+<a href="/Inspeccion" class="btn btn-secondary">
+    Registrar otra inspección
+</a>
+<a href="/PackingList" class="btn btn-outline-primary">
+    Volver a Packing List
+</a>
+
+<hr />
+
+<h2>Detalle de lotes inspeccionados</h2>
+
+@if (ViewBag.Inspecciones != null &&
+     ((IEnumerable<Grupo4.Models.InspeccionTemporal>)ViewBag.Inspecciones).Any())
+{
+    var inspecciones =
+        (IEnumerable<Grupo4.Models.InspeccionTemporal>)ViewBag.Inspecciones;
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID inspección</th>
+                <th>Packing List</th>
+                <th>Lote</th>
+                <th>Producción</th>
+                <th>Exportación</th>
+                <th>Días</th>
+                <th>Pallets</th>
+                <th>Resultado</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in inspecciones)
+            {
+                <tr>
+                    <td>@item.IdInspeccion</td>
+                    <td>@item.IdPackingList</td>
+                    <td>@item.CodigoLote</td>
+                    <td>@item.FechaProduccion?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.FechaExportacion?.ToString("dd/MM/yyyy")</td>
+                    <td>@item.DiasTranscurridos</td>
+                    <td>@item.CantidadPallets</td>
+                    <td>@item.Resultado</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No hay lotes inspeccionados para mostrar.</p>
+}
+                    
+<hr />
+<a href="/Vendedor" class="btn btn-primary">
+    Nuevo proceso de exportación
+</a>
+<a href="/Inicio" class="btn btn-secondary">
+    Menú principal
+</a>

@@ -1,0 +1,105 @@
+﻿@model Grupo4.Models.InspeccionTemporal
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Inspección temporal";
+}
+
+<h1>Inspección temporal de lotes</h1>
+<p>Control de antigüedad para exportación marítima</p>
+
+<form asp-controller="Inspeccion"
+      asp-action="Index"
+      method="post">
+
+      
+    <div class="mb-3">
+        <label asp-for="IdPackingList">Packing List asociado</label>
+
+        <select asp-for="IdPackingList" class="form-select">
+            <option value="">-- Selecciona un Packing List --</option>
+
+            @if (ViewBag.PackingLists != null)
+            {
+                foreach (var item in
+                    (IEnumerable<Grupo4.Models.PackingList>)ViewBag.PackingLists)
+                {
+                    <option value="@item.IdPackingList">
+                        @item.IdPackingList - @item.ClienteConsignatario
+                    </option>
+                }
+            }
+        </select>
+
+        <span asp-validation-for="IdPackingList"
+              class="text-danger"></span>
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="IdInspeccion">ID de inspección</label>
+        <input asp-for="IdInspeccion" class="form-control" />
+        <span asp-validation-for="IdInspeccion"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CodigoLote">Código de lote</label>
+        <input asp-for="CodigoLote" class="form-control" />
+        <span asp-validation-for="CodigoLote"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaProduccion">Fecha de producción</label>
+        <input asp-for="FechaProduccion"
+               type="date" class="form-control" />
+        <span asp-validation-for="FechaProduccion"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaExportacion">Fecha de exportación</label>
+        <input asp-for="FechaExportacion"
+               type="date" class="form-control" />
+        <span asp-validation-for="FechaExportacion"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CantidadPallets">Cantidad de pallets</label>
+        <input asp-for="CantidadPallets"
+               type="number" min="1" class="form-control" />
+        <span asp-validation-for="CantidadPallets"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Evaluar lote
+    </button>
+</form>
+
+@if (!string.IsNullOrWhiteSpace(Model.Resultado))
+{
+    <hr />
+    <h3>Resultado de la inspección</h3>
+    <p><strong>Lote:</strong> @Model.CodigoLote</p>
+    <p><strong>Antigüedad:</strong> @Model.DiasTranscurridos días</p>
+    <p><strong>Clasificación:</strong> @Model.Resultado</p>
+    <p>
+        <strong>Aprobado sanitario:</strong>
+        @(Model.AprobadoSanitario ? "Sí" : "No")
+    </p>
+}
+<a href="/PackingList" class="btn btn-secondary">
+    Volver a Packing List
+</a>
+
+
+<hr />
+<a href="/Despacho" class="btn btn-success">
+    Siguiente: Despacho →
+</a>
+<a href="/Inicio" class="btn btn-secondary">
+    Menú principal
+</a>

@@ -1,0 +1,131 @@
+﻿@model Grupo4.Models.PackingList
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Packing List";
+}
+
+<h1>Registro de Packing List</h1>
+<p>Despacho de Exportación</p>
+
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-success">@ViewBag.Mensaje</div>
+}
+
+<form asp-controller="PackingList" asp-action="Index" method="post">
+    <div class="mb-3">
+        <label asp-for="IdPackingList">Código de Packing List</label>
+        <input asp-for="IdPackingList" class="form-control" />
+        <span asp-validation-for="IdPackingList" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Descripcion">Descripción del producto</label>
+        <input asp-for="Descripcion" class="form-control" />
+        <span asp-validation-for="Descripcion" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ClienteConsignatario">Cliente consignatario</label>
+        <input asp-for="ClienteConsignatario" class="form-control" />
+        <span asp-validation-for="ClienteConsignatario" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Vendedor">Vendedor</label>
+        <input asp-for="Vendedor" class="form-control" />
+        <span asp-validation-for="Vendedor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="FechaEmision">Fecha de emisión</label>
+        <input asp-for="FechaEmision" type="date" class="form-control" />
+        <span asp-validation-for="FechaEmision" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Estado">Estado</label>
+        <select asp-for="Estado" class="form-select">
+            <option value="Pendiente">Pendiente</option>
+            <option value="En proceso">En proceso</option>
+            <option value="Completado">Completado</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PuertoEmbarque">Puerto de embarque</label>
+        <input asp-for="PuertoEmbarque" class="form-control" />
+        <span asp-validation-for="PuertoEmbarque" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PaisDestino">País de destino</label>
+        <input asp-for="PaisDestino" class="form-control" />
+        <span asp-validation-for="PaisDestino" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Validar Packing List</button>
+</form>
+
+
+<hr />
+
+<h2>Packing Lists registrados</h2>
+
+@if (ViewBag.PackingLists != null)
+{
+    var registros =
+        (IEnumerable<Grupo4.Models.PackingList>)ViewBag.PackingLists;
+
+    if (registros.Any())
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Destino</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in registros)
+                {
+                    <tr>
+                        <td>@item.IdPackingList</td>
+                        <td>@item.ClienteConsignatario</td>
+                        <td>@item.Descripcion</td>
+                        <td>@item.PaisDestino</td>
+                        <td>@item.Estado</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>Aún no hay Packing Lists registrados.</p>
+    }
+}
+
+<a href="/Inspeccion" class="btn btn-secondary">
+    Ir a inspección temporal
+</a>
+
+<a href="/Despacho" class="btn btn-primary">
+    Ver resumen de despacho
+</a>
+
+
+<a href="/Vendedor" class="btn btn-secondary mt-3">Volver a Vendedor</a>
+
+                        
+<hr />
+<a href="/Inspeccion" class="btn btn-primary">
+    Siguiente: Inspección temporal →
+</a>
+<a href="/Inicio" class="btn btn-secondary">
+    Menú principal
+</a>
